@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="Scripts/angular.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="ContactsController.js"></script>
+</head>
+<body ng-app="mainApp" ng-controller="contactsController">
+    <h1>Contacts List</h1>
+    <button class="btn btn-primary" ng-click="addContact()">Add</button>
+    <table class="table" ng-show="newContact">
+        <tr>
+            <td>First Name</td>
+            <td>
+                <input type="text" id="txtName" class="form-control" name="name" ng-model="contact.firstName" />
+            </td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td><input type="text" id="txtCountry" class="form-control" name="country" ng-model="contact.lastName" /></td>
+        </tr>
+        <tr>
+            <td>phone number</td>
+            <td><input type="text" id="txtCountry" class="form-control" name="country" ng-model="contact.phone" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="button" id="btnInsert" class="btn btn-primary" ng-click="saveContact()">Save</button>
+            </td>
+        </tr>
+    </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="contact in contactList">
+                <th scope="row">{{contact.id}}</th>
+                <td>{{contact.firstName}}</td>
+                <td>{{contact.lastName}}</td>
+                <td>{{contact.phone}}</td>
+                <td>
+                    <button class="btn btn-primary" ng-click="updateContact($index)">Edit</button>
+                    <button class="btn btn-primary" ng-click="deleteContact(contact)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
