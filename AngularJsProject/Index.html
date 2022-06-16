@@ -7,52 +7,65 @@
     <title></title>
     <script src="ContactsController.js"></script>
 </head>
-<body ng-app="mainApp" ng-controller="contactsController">
-    <h1>Contacts List</h1>
-    <button class="btn btn-primary" ng-click="addContact()">Add</button>
-    <table class="table" ng-show="newContact">
-        <tr>
-            <td>First Name</td>
-            <td>
-                <input type="text" id="txtName" class="form-control" name="name" ng-model="contact.firstName" />
-            </td>
-        </tr>
-        <tr>
-            <td>Last Name</td>
-            <td><input type="text" id="txtCountry" class="form-control" name="country" ng-model="contact.lastName" /></td>
-        </tr>
-        <tr>
-            <td>phone number</td>
-            <td><input type="text" id="txtCountry" class="form-control" name="country" ng-model="contact.phone" /></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <button type="button" id="btnInsert" class="btn btn-primary" ng-click="saveContact()">Save</button>
-            </td>
-        </tr>
-    </table>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="contact in contactList">
-                <th scope="row">{{contact.id}}</th>
-                <td>{{contact.firstName}}</td>
-                <td>{{contact.lastName}}</td>
-                <td>{{contact.phone}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="updateContact($index)">Edit</button>
-                    <button class="btn btn-primary" ng-click="deleteContact(contact)">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<body ng-app="mainApp">
+    <div class="col-md-12" ng-controller="contactsController">
+        <h1 class="text-center">Contacts List</h1>                
+        <form name="myForm" novalidate class="col-md-2">
+            <p>
+                First Name:<br>
+                <input type="text" name="firstname" class="form-control" ng-model="contact.firstName" required>
+                <span style="color:red" ng-show="myForm.firstname.$dirty && myForm.firstname.$invalid">
+                    <span ng-show="myForm.firstname.$error.required">First Name is required.</span>
+                </span>
+            </p>
+            <p>
+                Last Name:<br>
+                <input type="text" name="lastname" class="form-control" ng-model="contact.lastName" required>
+                <span style="color:red" ng-show="myForm.lastname.$dirty && myForm.lastname.$invalid">
+                    <span ng-show="myForm.lastname.$error.required">Last Name is required.</span>
+                </span>
+            </p>
+            <p>
+                Phone:<br>
+                <input type="number" name="phone" class="form-control" ng-model="contact.phone" required ng-minlength="10"
+                       ng-maxlength="10">
+                <span style="color:red" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
+                    <span ng-show="myForm.phone.$error.required || myForm.phone.$error.number">phone Name is required.</span>
+                </span>
+            </p>
+            <button type="submit" id="btnInsert" class="btn btn-primary"
+                    ng-disabled="myForm.firstname.$invalid || myForm.lastname.$invalid || myForm.phone.$invalid"
+                    ng-click="saveContact(myForm)">
+                Save
+            </button>
+        </form>
+        <div class="col-md-8">
+            <button class="btn btn-primary pull-right" style="float:right; margin-bottom:5px" ng-click="addContact()">Add Contact</button>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="contact in contactList">
+                        <th scope="row">{{contact.id}}</th>
+                        <td>{{contact.firstName}}</td>
+                        <td>{{contact.lastName}}</td>
+                        <td>{{contact.phone}}</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="updateContact($index)">Edit</button>
+                            <button class="btn btn-primary" ng-click="deleteContact(contact)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
