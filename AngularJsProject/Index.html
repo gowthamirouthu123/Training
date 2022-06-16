@@ -10,7 +10,7 @@
 <body ng-app="mainApp">
     <div class="col-md-12" ng-controller="contactsController">
         <h1 class="text-center">Contacts List</h1>                
-        <form name="myForm" novalidate class="col-md-2">
+        <form name="myForm" ng-show="newContact" novalidate class="col-md-2">
             <p>
                 First Name:<br>
                 <input type="text" name="firstname" class="form-control" ng-model="contact.firstName" required>
@@ -30,7 +30,10 @@
                 <input type="number" name="phone" class="form-control" ng-model="contact.phone" required ng-minlength="10"
                        ng-maxlength="10">
                 <span style="color:red" ng-show="myForm.phone.$dirty && myForm.phone.$invalid">
-                    <span ng-show="myForm.phone.$error.required || myForm.phone.$error.number">phone Name is required.</span>
+                    <span class="error" ng-show="myForm.phone.$error.required">Phone is Required!</span>
+                    <span class="error" ng-show="myForm.phone.$error.minlength">Phone no not less that 10 char.</span>
+                    <span class="error" ng-show="myForm.phone.$error.maxlength">Phone no not more than 11 char.</span>
+                    <br><span class="error" ng-show="myForm.phone.$error.pattern">Please match pattern [+91-036-78658 || 91-036-78658]</span>
                 </span>
             </p>
             <button type="submit" id="btnInsert" class="btn btn-primary"
@@ -40,8 +43,7 @@
             </button>
         </form>
         <div class="col-md-8">
-            <button class="btn btn-primary pull-right" style="float:right; margin-bottom:5px" ng-click="addContact()">Add Contact</button>
-
+            <button class="btn btn-primary pull-right" type="button" style="float:right; margin-bottom:5px" ng-disabled="newContact" ng-click="addContact()">Add Contact</button>
             <table class="table">
                 <thead>
                     <tr>
